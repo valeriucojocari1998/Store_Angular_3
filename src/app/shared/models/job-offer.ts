@@ -11,6 +11,7 @@ export class JobOffer {
   isCompany: boolean = false;
   timeLeft: number = 604800000;
   about: string = '';
+  title: string = '';
   requirements: string[] = [];
   tag: ProductTag | string = '';
   offers: UserOffer[] = [];

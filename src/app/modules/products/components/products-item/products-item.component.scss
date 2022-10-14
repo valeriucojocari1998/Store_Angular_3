@@ -1,0 +1,21 @@
+.product-card {
+  width: 400px;
+  height: 400px;
+  margin-bottom: 24px;
+
+  .mat-card-header {
+    height: 60px;
+  }
+
+  .mat-card-image {
+    height: 200px;
+    width: calc(100% + 32px);
+  }
+
+  .mat-card-content {
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+  }
+}
