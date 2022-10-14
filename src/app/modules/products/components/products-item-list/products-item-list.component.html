@@ -1,0 +1,5 @@
+<div fxLayout="row wrap" fxLayoutAlign="space-evenly">
+  <ng-container *ngFor="let product of jobOffers">
+    <app-products-item [jobOffer]="product"></app-products-item>
+  </ng-container>
+</div>

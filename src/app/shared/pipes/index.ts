@@ -1,2 +1,1 @@
-
-export const sharedPipes = []
+export const sharedPipes = [];
