@@ -7,7 +7,13 @@ import { sharedComponents } from './components';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, FlexLayoutModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FlexLayoutModule,
+    SharedMaterialModule,
+    RouterModule,
+  ],
   declarations: [sharedPipes, sharedComponents],
   exports: [sharedPipes, sharedComponents],
 })

@@ -1,1 +1,29 @@
-<div class="navbar-body"></div>
+<div class="navbar-body" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="navbar-title">Job Platform</div>
+  <div class="navbar-actions" fxLayout="row" fxLayoutGap="30px">
+    <button
+      mat-button
+      class="navbar-link button-expand-animation"
+      [routerLink]="['/home']"
+    >
+      home
+    </button>
+    <button
+      mat-button
+      class="navbar-link button-expand-animation"
+      [routerLink]="['/products']"
+    >
+      products
+    </button>
+    <button
+      mat-button
+      class="navbar-link button-expand-animation"
+      [routerLink]="['/about']"
+    >
+      about
+    </button>
+    <button mat-icon-button class="navbar-dropdown button-expand-animation">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </div>
+</div>

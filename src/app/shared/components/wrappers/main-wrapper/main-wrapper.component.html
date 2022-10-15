@@ -1,12 +1,9 @@
-<div
-  class="wrapper-body"
-  fxLayout="column"
-  fxLayoutAlign="space-between"
-  fxLayoutGap="20px"
->
-  <div fxLayout="column" fxLayoutGap="20px">
+<div class="wrapper-body" fxLayout="column" fxLayoutAlign="space-between">
+  <div fxLayout="column">
     <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
+    <div class="content-body">
+      <router-outlet></router-outlet>
+    </div>
   </div>
   <app-footer class="footer"></app-footer>
 </div>

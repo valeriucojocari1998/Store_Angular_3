@@ -1,7 +1,3 @@
-* {
-  transition: all 0.3s ease-out;
-}
-
 .product-card {
   width: 400px;
   height: 400px;
@@ -33,13 +29,6 @@
 
     .product-card-delete {
       margin-left: auto;
-
-      &:hover {
-        transition: all 0.2s ease-out;
-        transform: scale(1.2);
-        transform-origin: 50% 50%;
-        transition: transform 0.15s ease-out;
-      }
     }
   }
 

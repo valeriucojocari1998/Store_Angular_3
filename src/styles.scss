@@ -13,3 +13,12 @@ body {
 .content-spacing {
   padding: 20px 0;
 }
+
+.button-expand-animation {
+  &:hover {
+    transition: all 0.2s ease-out;
+    transform: scale(1.2);
+    transform-origin: 50% 50%;
+    transition: transform 0.15s ease-out;
+  }
+}
