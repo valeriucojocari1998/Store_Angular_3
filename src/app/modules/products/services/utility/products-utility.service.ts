@@ -43,6 +43,6 @@ export class ProductsUtilityService {
     page: number,
     pageSize: number = 20
   ) {
-    return jobOffers.splice(0, (page + 1) * pageSize);
+    return [...jobOffers].splice(0, (page + 1) * pageSize);
   }
 }

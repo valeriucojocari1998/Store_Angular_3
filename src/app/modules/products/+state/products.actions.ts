@@ -13,6 +13,12 @@ export class FilterProductsAction {
   constructor(public filters?: ProductsFilters) {}
 }
 
+export class LoadMoreProductsAction {
+  public static readonly type = '[Products] load more products';
+
+  constructor() {}
+}
+
 export class AddProductAction {
   public static readonly type = '[Products] add product';
 
