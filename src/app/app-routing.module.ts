@@ -5,7 +5,7 @@ import { MainWrapperComponent } from './shared/components/wrappers/main-wrapper/
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: 'home',
     component: MainWrapperComponent,
     loadChildren: () =>
       import('./modules/dashboard/dashboard.module').then(
@@ -25,6 +25,12 @@ const routes: Routes = [
     component: MainWrapperComponent,
     loadChildren: () =>
       import('./modules/cart/cart.module').then((m) => m.CartModule),
+  },
+  {
+    path: 'about',
+    component: MainWrapperComponent,
+    loadChildren: () =>
+      import('./modules/about/about.module').then((m) => m.AboutModule),
   },
   {
     path: 'login',
