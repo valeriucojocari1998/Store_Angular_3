@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { JobOffer } from 'src/app/shared/models';
 
 @Component({
@@ -6,10 +6,18 @@ import { JobOffer } from 'src/app/shared/models';
   templateUrl: './products-item.component.html',
   styleUrls: ['./products-item.component.scss'],
 })
-export class ProductsItemComponent implements OnInit {
+export class ProductsItemComponent {
   @Input() jobOffer!: JobOffer;
+  @Input() disabledEditing: boolean = false;
+  @Input() editingLoading: boolean = false;
+  @Output() editEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
-  ngOnInit(): void {}
+  editJobOffer(): void {}
+
+  deleteJobOffer(): void {
+    this.deleteEmitter.emit(this.jobOffer.id);
+  }
 }

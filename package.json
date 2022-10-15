@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@ngxs/devtools-plugin": "^3.7.5",
     "@ngxs/store": "^3.7.5",
     "angular-in-memory-web-api": "^0.14.0",
     "guid-typescript": "^1.0.9",
