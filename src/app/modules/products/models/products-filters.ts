@@ -4,8 +4,10 @@ import { PriceRange } from 'src/app/shared/models';
 export class ProductsFilters {
   page: number = 0;
   pageSize: number = 20;
-  priceRange!: PriceRange;
-  tags!: ProductTag[];
+  isActive?: boolean;
+  isCompany?: boolean;
+  priceRange?: PriceRange;
+  tags?: ProductTag[];
 
   constructor(filters?: Partial<ProductsFilters>) {
     if (filters) {

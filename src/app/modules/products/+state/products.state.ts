@@ -10,7 +10,7 @@ import {
 } from '@ngxs/store';
 import { patch, removeItem } from '@ngxs/store/operators';
 import { Observable, tap } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { JobOffer } from 'src/app/shared/models';
 import { ProductsFilters } from './../models/products-filters';
 import { ProductsApiService } from '../services/api/products-api.service';
@@ -105,9 +105,15 @@ export class ProductsState {
     const { jobOffers, savedFilters } = getState();
     const newFilters = filters ?? savedFilters;
 
+    const jobOffersFilteredByIsActive = !!newFilters.isActive
+      ? jobOffers.filter((offer) => offer.isActive)
+      : [...jobOffers];
+    const jobOffersFilteredByIsCompany = !!newFilters.isCompany
+      ? jobOffersFilteredByIsActive.filter((offer) => offer.isCompany)
+      : [...jobOffersFilteredByIsActive];
     const jobOffersFilteredByPrice =
       this.productsUtilityService.filterJobOffersByPriceRange(
-        jobOffers,
+        jobOffersFilteredByIsCompany,
         newFilters.priceRange
       );
     const jobOffersFilteredByTag =

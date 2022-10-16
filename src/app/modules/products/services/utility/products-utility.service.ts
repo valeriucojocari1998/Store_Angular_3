@@ -8,6 +8,8 @@ import { JobOffer, PriceRange } from './../../../../shared/models';
 export class ProductsUtilityService {
   constructor() {}
 
+  filterJobOffersBy;
+
   filterJobOffersByPriceRange(
     jobOffers: JobOffer[],
     priceRange: PriceRange
