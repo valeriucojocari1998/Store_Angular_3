@@ -1,17 +1,10 @@
 import { ProductsUtilityService } from './../services/utility/products-utility.service';
 import { Injectable } from '@angular/core';
-import {
-  Action,
-  NgxsOnInit,
-  Selector,
-  State,
-  StateContext,
-  StateToken,
-} from '@ngxs/store';
+import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { patch, removeItem } from '@ngxs/store/operators';
 import { Observable, tap } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { JobOffer } from 'src/app/shared/models';
+import { switchMap } from 'rxjs/operators';
+import { ProductOffer } from 'src/app/shared/models';
 import { ProductsFilters } from './../models/products-filters';
 import { ProductsApiService } from '../services/api/products-api.service';
 import {
@@ -22,16 +15,16 @@ import {
 } from './products.actions';
 
 export interface ProductsStateModel {
-  jobOffers: JobOffer[];
-  filteredJobOffers: JobOffer[];
+  productOffers: ProductOffer[];
+  filteredProductOffers: ProductOffer[];
   totalFiltered: number;
   favorites: string[];
   savedFilters: ProductsFilters;
 }
 
 export const ProductsDefaults: ProductsStateModel = {
-  jobOffers: [],
-  filteredJobOffers: [],
+  productOffers: [],
+  filteredProductOffers: [],
   totalFiltered: 0,
   favorites: [],
   savedFilters: new ProductsFilters(),
@@ -55,16 +48,16 @@ export class ProductsState {
   ) {}
 
   @Selector([PRODUCTS_STATE_TOKEN])
-  public static getJobOffers({
-    filteredJobOffers,
-  }: ProductsStateModel): JobOffer[] {
+  public static getProductOffers({
+    filteredProductOffers: filteredJobOffers,
+  }: ProductsStateModel): ProductOffer[] {
     return filteredJobOffers;
   }
 
   @Selector([PRODUCTS_STATE_TOKEN])
   public static getMorePossible({
     totalFiltered,
-    filteredJobOffers,
+    filteredProductOffers: filteredJobOffers,
   }: ProductsStateModel): number {
     return totalFiltered - filteredJobOffers?.length > -1
       ? totalFiltered - filteredJobOffers?.length
@@ -73,9 +66,9 @@ export class ProductsState {
 
   @Selector([PRODUCTS_STATE_TOKEN])
   public static getFavorites({
-    jobOffers,
+    productOffers: jobOffers,
     favorites,
-  }: ProductsStateModel): JobOffer[] {
+  }: ProductsStateModel): ProductOffer[] {
     return jobOffers?.filter((offer) => favorites?.includes(offer.id));
   }
 
@@ -87,12 +80,12 @@ export class ProductsState {
   }
 
   @Action(GetProductsAction)
-  public getJobOffers({
+  public getProductOffers({
     patchState,
     dispatch,
   }: StateContext<ProductsStateModel>): Observable<void> {
     return this.productsApiService.getJobs().pipe(
-      tap((jobOffers) => patchState({ jobOffers })),
+      tap((jobOffers) => patchState({ productOffers: jobOffers })),
       switchMap(() => dispatch(new FilterProductsAction()))
     );
   }
@@ -102,18 +95,15 @@ export class ProductsState {
     { getState, patchState }: StateContext<ProductsStateModel>,
     { filters }: FilterProductsAction
   ): void {
-    const { jobOffers, savedFilters } = getState();
+    const { productOffers: jobOffers, savedFilters } = getState();
     const newFilters = filters ?? savedFilters;
 
     const jobOffersFilteredByIsActive = !!newFilters.isActive
       ? jobOffers.filter((offer) => offer.isActive)
       : [...jobOffers];
-    const jobOffersFilteredByIsCompany = !!newFilters.isCompany
-      ? jobOffersFilteredByIsActive.filter((offer) => offer.isCompany)
-      : [...jobOffersFilteredByIsActive];
     const jobOffersFilteredByPrice =
       this.productsUtilityService.filterJobOffersByPriceRange(
-        jobOffersFilteredByIsCompany,
+        jobOffersFilteredByIsActive,
         newFilters.priceRange
       );
     const jobOffersFilteredByTag =
@@ -130,7 +120,7 @@ export class ProductsState {
 
     patchState({
       totalFiltered: jobOffersFilteredByTag.length,
-      filteredJobOffers: jobOffersFilteredByPage,
+      filteredProductOffers: jobOffersFilteredByPage,
       savedFilters: newFilters,
     });
   }
@@ -155,7 +145,7 @@ export class ProductsState {
       tap(() =>
         setState(
           patch({
-            jobOffers: removeItem<JobOffer>((offer) => offer.id === id),
+            productOffers: removeItem<ProductOffer>((offer) => offer.id === id),
           })
         )
       ),

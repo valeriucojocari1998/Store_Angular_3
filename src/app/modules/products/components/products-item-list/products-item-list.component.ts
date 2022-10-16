@@ -1,4 +1,4 @@
-import { JobOffer } from './../../../../shared/models';
+import { ProductOffer } from './../../../../shared/models';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -7,7 +7,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./products-item-list.component.scss'],
 })
 export class ProductsItemListComponent implements OnInit {
-  @Input() jobOffers: JobOffer[] = [];
+  @Input() jobOffers: ProductOffer[] = [];
   @Input() editingItem: string = '';
   @Input() isDisabledEditing: boolean = false;
   @Output() deleteEmitter: EventEmitter<string> = new EventEmitter<string>();

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { catchError, Observable } from 'rxjs';
 
-import { JobOffer } from './../../../../shared/models';
+import { ProductOffer } from './../../../../shared/models';
 import { ProductsState } from './../../+state/products.state';
 import {
   DeleteProductAction,
@@ -16,7 +16,9 @@ import {
   styleUrls: ['./products-board.component.scss'],
 })
 export class ProductsBoardComponent implements OnInit {
-  @Select(ProductsState.getJobOffers) jobOffers$!: Observable<JobOffer[]>;
+  @Select(ProductsState.getProductOffers) jobOffers$!: Observable<
+    ProductOffer[]
+  >;
   @Select(ProductsState.getMorePossible) morePossible$: Observable<number>;
   isLoadingItems: boolean = false;
   isDisabledEditing: boolean = false;

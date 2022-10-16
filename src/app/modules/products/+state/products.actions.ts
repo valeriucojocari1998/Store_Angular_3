@@ -1,5 +1,5 @@
 import { ProductsFilters } from './../models/products-filters';
-import { JobOffer } from '../../../shared/models/job-offer';
+import { ProductOffer } from '../../../shared/models/product-offer';
 
 export class GetProductsAction {
   public static readonly type = '[Products] get products';
@@ -22,13 +22,13 @@ export class LoadMoreProductsAction {
 export class AddProductAction {
   public static readonly type = '[Products] add product';
 
-  constructor(public jobOffer: JobOffer) {}
+  constructor(public jobOffer: ProductOffer) {}
 }
 
 export class EditProductAction {
   public static readonly type = '[Products] edit product';
 
-  constructor(public jobOffer: JobOffer, public id: string) {}
+  constructor(public jobOffer: ProductOffer, public id: string) {}
 }
 
 export class DeleteProductAction {

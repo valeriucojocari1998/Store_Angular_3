@@ -1,6 +1,6 @@
 import { ProductTag } from 'src/app/shared/enums';
 import { Injectable } from '@angular/core';
-import { JobOffer, PriceRange } from './../../../../shared/models';
+import { ProductOffer, PriceRange } from './../../../../shared/models';
 
 @Injectable({
   providedIn: 'root',
@@ -11,22 +11,25 @@ export class ProductsUtilityService {
   filterJobOffersBy;
 
   filterJobOffersByPriceRange(
-    jobOffers: JobOffer[],
+    jobOffers: ProductOffer[],
     priceRange: PriceRange
-  ): JobOffer[] {
+  ): ProductOffer[] {
     if (!priceRange || !jobOffers?.length) {
       return [...jobOffers];
     }
     return [
       ...jobOffers?.filter(
         (offer) =>
-          offer.startingPrice > priceRange?.minPrice &&
-          offer.startingPrice < priceRange?.maxPrice
+          offer.price > priceRange?.minPrice &&
+          offer.price < priceRange?.maxPrice
       ),
     ];
   }
 
-  filterJobOffersByTags(jobOffers: JobOffer[], tags: ProductTag[]): JobOffer[] {
+  filterJobOffersByTags(
+    jobOffers: ProductOffer[],
+    tags: ProductTag[]
+  ): ProductOffer[] {
     if (!jobOffers?.length || !tags?.length) {
       return [...jobOffers];
     }
@@ -41,7 +44,7 @@ export class ProductsUtilityService {
   }
 
   filterJobOffersByPageAndSize(
-    jobOffers: JobOffer[],
+    jobOffers: ProductOffer[],
     page: number,
     pageSize: number = 20
   ) {

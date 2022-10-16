@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { JobOffer } from 'src/app/shared/models';
+import { ProductOffer } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-products-item',
@@ -7,7 +7,7 @@ import { JobOffer } from 'src/app/shared/models';
   styleUrls: ['./products-item.component.scss'],
 })
 export class ProductsItemComponent {
-  @Input() jobOffer!: JobOffer;
+  @Input() jobOffer!: ProductOffer;
   @Input() disabledEditing: boolean = false;
   @Input() editingLoading: boolean = false;
   @Output() editEmitter: EventEmitter<string> = new EventEmitter<string>();

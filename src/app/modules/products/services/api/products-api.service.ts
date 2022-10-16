@@ -1,4 +1,4 @@
-import { JobOffer } from '../../../../shared/models/job-offer';
+import { ProductOffer } from '../../../../shared/models/product-offer';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -10,15 +10,15 @@ export class ProductsApiService {
   private jobsUrl = 'api/job_offers/';
   constructor(private http: HttpClient) {}
 
-  getJobs(): Observable<JobOffer[]> {
-    return this.http.get<JobOffer[]>(this.jobsUrl);
+  getJobs(): Observable<ProductOffer[]> {
+    return this.http.get<ProductOffer[]>(this.jobsUrl);
   }
 
-  addJob(job: JobOffer): Observable<JobOffer> {
-    return this.http.post<JobOffer>(this.jobsUrl, job);
+  addJob(job: ProductOffer): Observable<ProductOffer> {
+    return this.http.post<ProductOffer>(this.jobsUrl, job);
   }
 
-  editJob(job: JobOffer): Observable<any> {
+  editJob(job: ProductOffer): Observable<any> {
     return this.http.put(this.jobsUrl + job.id, job);
   }
 
