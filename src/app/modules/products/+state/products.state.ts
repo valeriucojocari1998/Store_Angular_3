@@ -17,7 +17,7 @@ import {
 export interface ProductsStateModel {
   productOffers: ProductOffer[];
   filteredProductOffers: ProductOffer[];
-  totalFiltered: number;
+  isLoadingProducts: boolean;
   favorites: string[];
   savedFilters: ProductsFilters;
 }
@@ -25,7 +25,7 @@ export interface ProductsStateModel {
 export const ProductsDefaults: ProductsStateModel = {
   productOffers: [],
   filteredProductOffers: [],
-  totalFiltered: 0,
+  isLoadingProducts: false,
   favorites: [],
   savedFilters: new ProductsFilters(),
 };
@@ -49,27 +49,34 @@ export class ProductsState {
 
   @Selector([PRODUCTS_STATE_TOKEN])
   public static getProductOffers({
-    filteredProductOffers: filteredJobOffers,
+    filteredProductOffers,
   }: ProductsStateModel): ProductOffer[] {
-    return filteredJobOffers;
+    return filteredProductOffers;
   }
 
   @Selector([PRODUCTS_STATE_TOKEN])
   public static getMorePossible({
-    totalFiltered,
-    filteredProductOffers: filteredJobOffers,
+    productOffers,
+    filteredProductOffers: filteredProductOffers,
   }: ProductsStateModel): number {
-    return totalFiltered - filteredJobOffers?.length > -1
-      ? totalFiltered - filteredJobOffers?.length
+    return productOffers.length - filteredProductOffers?.length > -1
+      ? productOffers.length - filteredProductOffers?.length
       : 0;
   }
 
   @Selector([PRODUCTS_STATE_TOKEN])
+  public static getIsLoadingProducts({
+    isLoadingProducts,
+  }: ProductsStateModel): boolean {
+    return isLoadingProducts;
+  }
+
+  @Selector([PRODUCTS_STATE_TOKEN])
   public static getFavorites({
-    productOffers: jobOffers,
+    productOffers: productOffers,
     favorites,
   }: ProductsStateModel): ProductOffer[] {
-    return jobOffers?.filter((offer) => favorites?.includes(offer.id));
+    return productOffers?.filter((offer) => favorites?.includes(offer.id));
   }
 
   @Selector([PRODUCTS_STATE_TOKEN])
@@ -84,9 +91,11 @@ export class ProductsState {
     patchState,
     dispatch,
   }: StateContext<ProductsStateModel>): Observable<void> {
+    patchState({ isLoadingProducts: true });
     return this.productsApiService.getJobs().pipe(
-      tap((jobOffers) => patchState({ productOffers: jobOffers })),
-      switchMap(() => dispatch(new FilterProductsAction()))
+      tap((productOffers) => patchState({ productOffers: productOffers })),
+      switchMap(() => dispatch(new FilterProductsAction())),
+      tap(() => patchState({ isLoadingProducts: false }))
     );
   }
 
@@ -95,32 +104,16 @@ export class ProductsState {
     { getState, patchState }: StateContext<ProductsStateModel>,
     { filters }: FilterProductsAction
   ): void {
-    const { productOffers: jobOffers, savedFilters } = getState();
+    const { productOffers, savedFilters } = getState();
     const newFilters = filters ?? savedFilters;
-
-    const jobOffersFilteredByIsActive = !!newFilters.isActive
-      ? jobOffers.filter((offer) => offer.isActive)
-      : [...jobOffers];
-    const jobOffersFilteredByPrice =
-      this.productsUtilityService.filterJobOffersByPriceRange(
-        jobOffersFilteredByIsActive,
-        newFilters.priceRange
-      );
-    const jobOffersFilteredByTag =
-      this.productsUtilityService.filterJobOffersByTags(
-        jobOffersFilteredByPrice,
-        newFilters.tags
-      );
-    const jobOffersFilteredByPage =
-      this.productsUtilityService.filterJobOffersByPageAndSize(
-        jobOffersFilteredByTag,
-        newFilters.page,
-        newFilters.pageSize
+    const filteredProductOffers =
+      this.productsUtilityService.filterProductOffers(
+        productOffers,
+        newFilters
       );
 
     patchState({
-      totalFiltered: jobOffersFilteredByTag.length,
-      filteredProductOffers: jobOffersFilteredByPage,
+      filteredProductOffers: filteredProductOffers,
       savedFilters: newFilters,
     });
   }

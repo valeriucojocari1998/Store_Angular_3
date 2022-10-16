@@ -16,11 +16,11 @@ import {
   styleUrls: ['./products-board.component.scss'],
 })
 export class ProductsBoardComponent implements OnInit {
-  @Select(ProductsState.getProductOffers) jobOffers$!: Observable<
+  @Select(ProductsState.getProductOffers) jobOffers$: Observable<
     ProductOffer[]
   >;
   @Select(ProductsState.getMorePossible) morePossible$: Observable<number>;
-  isLoadingItems: boolean = false;
+  @Select(ProductsState.getIsLoadingProducts) isLoading$: Observable<boolean>;
   isDisabledEditing: boolean = false;
   editingItem: string = '';
 
@@ -31,19 +31,11 @@ export class ProductsBoardComponent implements OnInit {
   }
 
   loadInitialJobOffers(): void {
-    this.isLoadingItems = true;
-    this.store
-      .dispatch(new GetProductsAction())
-      .pipe(catchError((error) => error))
-      .subscribe(() => (this.isLoadingItems = false));
+    this.store.dispatch(new GetProductsAction());
   }
 
   loadMoreJobOffers(): void {
-    this.isLoadingItems = true;
-    this.store
-      .dispatch(new LoadMoreProductsAction())
-      .pipe(catchError((error) => error))
-      .subscribe(() => (this.isLoadingItems = false));
+    this.store.dispatch(new LoadMoreProductsAction());
   }
 
   deleteJobOffer(id: string): void {

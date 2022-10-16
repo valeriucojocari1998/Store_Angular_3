@@ -1,5 +1,5 @@
 <div
-  *ngIf="isLoadingItems"
+  *ngIf="!!(isLoading$ | async)"
   fxLayoutAlign="center center"
   class="products-board-spinner"
 >
@@ -13,7 +13,9 @@
 ></app-products-item-list>
 <button
   *ngIf="!!(jobOffers$ | async).length"
-  [disabled]="!(morePossible$ | async) || isLoadingItems || isDisabledEditing"
+  [disabled]="
+    !(morePossible$ | async) || !!(isLoading$ | async) || isDisabledEditing
+  "
   fxLayoutAlign="center center"
   mat-button
   color="primary"

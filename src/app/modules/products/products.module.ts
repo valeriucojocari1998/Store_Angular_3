@@ -21,7 +21,6 @@ import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
   imports: [
     CommonModule,
     ProductsRoutingModule,
-    NgxsModule.forFeature([ProductsState]),
     SharedMaterialModule,
     FlexLayoutModule,
   ],

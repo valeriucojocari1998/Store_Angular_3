@@ -1,3 +1,4 @@
+import { ProductsState } from './modules/products/+state/products.state';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgModule } from '@angular/core';
@@ -21,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientInMemoryWebApiModule.forRoot(InMemoryApiService, {
       dataEncapsulation: false,
     }),
-    NgxsModule.forRoot(),
+    NgxsModule.forRoot([ProductsState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   providers: [],
