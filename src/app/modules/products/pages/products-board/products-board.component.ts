@@ -3,20 +3,20 @@ import { Select, Store } from '@ngxs/store';
 import { catchError, Observable } from 'rxjs';
 
 import { ProductOffer } from './../../../../shared/models';
-import { ProductsState } from './../../+state/products.state';
+import { ProductsState } from '../../../../+state/products.state';
 import {
   DeleteProductAction,
   GetProductsAction,
   LoadMoreProductsAction,
-} from '../../+state/products.actions';
+} from '../../../../+state/products.actions';
 
 @Component({
   selector: 'app-products-board',
   templateUrl: './products-board.component.html',
   styleUrls: ['./products-board.component.scss'],
 })
-export class ProductsBoardComponent implements OnInit {
-  @Select(ProductsState.getProductOffers) jobOffers$: Observable<
+export class ProductsBoardComponent {
+  @Select(ProductsState.getProductOffers) productOffers$: Observable<
     ProductOffer[]
   >;
   @Select(ProductsState.getMorePossible) morePossible$: Observable<number>;
@@ -26,19 +26,11 @@ export class ProductsBoardComponent implements OnInit {
 
   constructor(private store: Store) {}
 
-  ngOnInit(): void {
-    this.loadInitialJobOffers();
-  }
-
-  loadInitialJobOffers(): void {
-    this.store.dispatch(new GetProductsAction());
-  }
-
-  loadMoreJobOffers(): void {
+  loadMoreProductOffers(): void {
     this.store.dispatch(new LoadMoreProductsAction());
   }
 
-  deleteJobOffer(id: string): void {
+  deleteProductOffer(id: string): void {
     this.editingItem = id;
     this.isDisabledEditing = true;
     this.store

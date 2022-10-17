@@ -1,17 +1,26 @@
-import { ProductsUtilityService } from './../services/utility/products-utility.service';
+import { ProductsUtilityService } from '../modules/products/services/utility/products-utility.service';
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
+import {
+  Action,
+  createSelector,
+  NgxsOnInit,
+  Selector,
+  State,
+  StateContext,
+  StateToken,
+} from '@ngxs/store';
 import { patch, removeItem } from '@ngxs/store/operators';
 import { Observable, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ProductOffer } from 'src/app/shared/models';
-import { ProductsFilters } from './../models/products-filters';
-import { ProductsApiService } from '../services/api/products-api.service';
+import { ProductsFilters } from '../modules/products/models/products-filters';
+import { ProductsApiService } from '../modules/products/services/api/products-api.service';
 import {
   GetProductsAction,
   FilterProductsAction,
   DeleteProductAction,
   LoadMoreProductsAction,
+  ToggleFavoriteProductAction,
 } from './products.actions';
 
 export interface ProductsStateModel {
@@ -26,7 +35,19 @@ export const ProductsDefaults: ProductsStateModel = {
   productOffers: [],
   filteredProductOffers: [],
   isLoadingProducts: false,
-  favorites: [],
+  favorites: [
+    '634c45e61c77dbbb0895c733',
+    '634c45e6e38452e6138609f4',
+    '634c45e69c1d1bc24851aad7',
+    '634c45e69b678e551bef1ec2',
+    '634c45e6bb7f25dc344ed3f8',
+    '634c45e6482646f5262577b1',
+    '634c45e652a465a93d7a2984',
+    '634c45e6f251965cf5f17369',
+    '634c45e64674d8912fb3faf3',
+    '634c45e63d9f3b58d419bf77',
+    '634c45e6afeadd72026b3481',
+  ],
   savedFilters: new ProductsFilters(),
 };
 
@@ -41,11 +62,15 @@ export const PRODUCTS_STATE_TOKEN = new StateToken<ProductsStateModel>(
 @Injectable({
   providedIn: 'root',
 })
-export class ProductsState {
+export class ProductsState implements NgxsOnInit {
   constructor(
     private productsApiService: ProductsApiService,
     private productsUtilityService: ProductsUtilityService
   ) {}
+
+  ngxsOnInit({ dispatch }: StateContext<any>): void {
+    dispatch(new GetProductsAction());
+  }
 
   @Selector([PRODUCTS_STATE_TOKEN])
   public static getProductOffers({
@@ -77,6 +102,17 @@ export class ProductsState {
     favorites,
   }: ProductsStateModel): ProductOffer[] {
     return productOffers?.filter((offer) => favorites?.includes(offer.id));
+  }
+
+  public static isProductFavorite(
+    productId: string
+  ): (state: ProductsStateModel) => boolean {
+    return createSelector(
+      [PRODUCTS_STATE_TOKEN],
+      ({ favorites }: ProductsStateModel) => {
+        return favorites.includes(productId);
+      }
+    );
   }
 
   @Selector([PRODUCTS_STATE_TOKEN])
@@ -144,5 +180,23 @@ export class ProductsState {
       ),
       switchMap(() => dispatch(new FilterProductsAction()))
     );
+  }
+
+  @Action(ToggleFavoriteProductAction)
+  public toggleFavoriteProduct(
+    { patchState, getState }: StateContext<ProductsStateModel>,
+    { id }: ToggleFavoriteProductAction
+  ): void {
+    const { favorites } = getState();
+    const isFavorite = favorites.includes(id);
+    let newFavorites: string[];
+
+    if (isFavorite) {
+      newFavorites = favorites.filter((favId) => favId !== id);
+    } else {
+      newFavorites = [...favorites, id];
+    }
+
+    patchState({ favorites: newFavorites });
   }
 }

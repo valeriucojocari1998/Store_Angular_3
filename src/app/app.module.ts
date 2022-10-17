@@ -1,4 +1,4 @@
-import { ProductsState } from './modules/products/+state/products.state';
+import { ProductsState } from './+state/products.state';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgModule } from '@angular/core';
@@ -7,14 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { SharedModule } from './shared/shared.module';
 import { InMemoryApiService } from './shared/services/in-memory-api.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    SharedModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

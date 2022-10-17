@@ -1,4 +1,5 @@
-import { ProductOffer } from './../../../../shared/models';
+import { ProductItemConfig } from '../../../../shared/models/product-item-config';
+import { ProductOffer } from '../../../../shared/models';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -7,9 +8,11 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./products-item-list.component.scss'],
 })
 export class ProductsItemListComponent implements OnInit {
-  @Input() jobOffers: ProductOffer[] = [];
+  @Input() productOffers: ProductOffer[] = [];
   @Input() editingItem: string = '';
   @Input() isDisabledEditing: boolean = false;
+  @Input() itemSize: ProductItemConfig = { width: '400px', height: '400px' };
+  @Input() hideEditing: boolean = false;
   @Output() deleteEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}

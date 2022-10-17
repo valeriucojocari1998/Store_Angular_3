@@ -1,9 +1,11 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-between">
-  <ng-container *ngFor="let product of jobOffers">
+  <ng-container *ngFor="let product of productOffers">
     <app-products-item
-      [jobOffer]="product"
+      [productOffer]="product"
       [editingLoading]="editingItem === product.id"
       [disabledEditing]="isDisabledEditing"
+      [hideEditing]="hideEditing"
+      [size]="itemSize"
       (deleteEmitter)="deleteJobOffer($event)"
     ></app-products-item>
   </ng-container>

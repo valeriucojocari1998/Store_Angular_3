@@ -1,3 +1,17 @@
-<p>
-  dashboard works!
-</p>
+<div class="dashboard-wrapper" fxLayout="column" fxLayoutGap="20px">
+  <div class="dashboard-favorite-title">Favorites:</div>
+  <mat-divider></mat-divider>
+  <div
+    id="favoritesList"
+    fxLayout="row"
+    class="dashboard-products-list"
+    fxLayoutGap="40px"
+  >
+    <div *ngFor="let favorite of favorites$ | async">
+      <app-products-item
+        [productOffer]="favorite"
+        [size]="{ width: '300px', height: '300px' }"
+      ></app-products-item>
+    </div>
+  </div>
+</div>

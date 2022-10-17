@@ -15,6 +15,11 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
   declarations: [sharedPipes, sharedComponents],
-  exports: [sharedPipes, sharedComponents],
+  exports: [
+    sharedPipes,
+    sharedComponents,
+    SharedMaterialModule,
+    FlexLayoutModule,
+  ],
 })
 export class SharedModule {}

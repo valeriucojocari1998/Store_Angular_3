@@ -1,0 +1,54 @@
+<mat-card
+  [style.width]="size.width"
+  [style.height]="size.height"
+  fxLayout="column"
+  class="product-card"
+>
+  <div
+    *ngIf="editingLoading"
+    fxLayoutAlign="center center"
+    class="product-card-spinner"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+  <mat-card-header>
+    <div mat-card-avatar fxLayoutAlign="center center">
+      <mat-icon>person</mat-icon>
+    </div>
+    <mat-card-title>{{ productOffer.title }} </mat-card-title>
+    <mat-card-subtitle>{{ productOffer.tag }}</mat-card-subtitle>
+    <button
+      *ngIf="!hideEditing"
+      (click)="deleteProductOffer()"
+      [disabled]="disabledEditing"
+      mat-icon-button
+      color="primary"
+      class="button-expand-animation product-card-delete"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-header>
+  <img
+    mat-card-image
+    src="/assets/images/{{ productOffer.picture }}"
+    alt="Photo of a Shiba Inu"
+  />
+  <mat-card-content>
+    {{ productOffer.about }}
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button
+      (click)="toggleFavoriteProduct()"
+      class="button-expand-animation"
+      mat-icon-button
+      color="primary"
+    >
+      <mat-icon *ngIf="!(isFavorite$ | async)">star_border</mat-icon>
+      <mat-icon *ngIf="isFavorite$ | async">star</mat-icon>
+    </button>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button mat-button color="secondary">LIKE</button>
+      <button mat-button color="secondary">SHARE</button>
+    </div>
+  </mat-card-actions>
+</mat-card>

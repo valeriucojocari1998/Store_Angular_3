@@ -1,7 +1,5 @@
 .product-card {
-  width: 400px;
-  height: 400px;
-  margin-bottom: 24px;
+  margin-bottom: 40px;
   position: relative;
   cursor: pointer;
 
@@ -14,7 +12,8 @@
   }
 
   .mat-card-header {
-    height: 60px;
+    height: 15%;
+    margin-bottom: 5px;
 
     .mat-icon {
       width: 30px;
@@ -33,7 +32,7 @@
   }
 
   .mat-card-image {
-    height: 200px;
+    height: 45%;
     width: calc(100% + 32px);
   }
 
@@ -42,6 +41,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     display: -webkit-box;
+    margin-bottom: 0;
   }
 
   .product-card-spinner {

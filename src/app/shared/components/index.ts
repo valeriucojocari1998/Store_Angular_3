@@ -1,3 +1,4 @@
+import { ProductsItemComponent } from './products-item/products-item.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { dialogsComponents } from './dialogs';
@@ -8,4 +9,5 @@ export const sharedComponents = [
   ...dialogsComponents,
   FooterComponent,
   NavbarComponent,
+  ProductsItemComponent,
 ];

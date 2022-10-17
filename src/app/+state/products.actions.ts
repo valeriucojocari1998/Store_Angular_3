@@ -1,5 +1,5 @@
-import { ProductsFilters } from './../models/products-filters';
-import { ProductOffer } from '../../../shared/models/product-offer';
+import { ProductsFilters } from '../modules/products/models/products-filters';
+import { ProductOffer } from '../shared/models/product-offer';
 
 export class GetProductsAction {
   public static readonly type = '[Products] get products';

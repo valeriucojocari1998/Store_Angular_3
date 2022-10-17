@@ -1,30 +1,32 @@
-<div
-  *ngIf="!!(isLoading$ | async)"
-  fxLayoutAlign="center center"
-  class="products-board-spinner"
->
-  <mat-spinner></mat-spinner>
-</div>
-<app-products-item-list
-  [jobOffers]="jobOffers$ | async"
-  [isDisabledEditing]="isDisabledEditing"
-  [editingItem]="editingItem"
-  (deleteEmitter)="deleteJobOffer($event)"
-></app-products-item-list>
-<button
-  *ngIf="!!(jobOffers$ | async).length"
-  [disabled]="
-    !(morePossible$ | async) || !!(isLoading$ | async) || isDisabledEditing
-  "
-  fxLayoutAlign="center center"
-  mat-button
-  color="primary"
-  title="load-more"
-  class="products-board-load-more"
-  (click)="loadMoreJobOffers()"
->
-  <div fxLayout="row" fxLayoutGap="10px">
-    <mat-icon>add</mat-icon>
-    <div>{{ morePossible$ | async }}</div>
+<div class="products-wrapper" fxLayout="column">
+  <div
+    *ngIf="!!(isLoading$ | async)"
+    fxLayoutAlign="center center"
+    class="products-board-spinner"
+  >
+    <mat-spinner></mat-spinner>
   </div>
-</button>
+  <app-products-item-list
+    [productOffers]="productOffers$ | async"
+    [isDisabledEditing]="isDisabledEditing"
+    [editingItem]="editingItem"
+    (deleteEmitter)="deleteProductOffer($event)"
+  ></app-products-item-list>
+  <button
+    *ngIf="!!(productOffers$ | async).length"
+    [disabled]="
+      !(morePossible$ | async) || !!(isLoading$ | async) || isDisabledEditing
+    "
+    fxLayoutAlign="center center"
+    mat-button
+    color="primary"
+    title="load-more"
+    class="products-board-load-more"
+    (click)="loadMoreProductOffers()"
+  >
+    <div fxLayout="row" fxLayoutGap="10px">
+      <mat-icon>add</mat-icon>
+      <div>{{ morePossible$ | async }}</div>
+    </div>
+  </button>
+</div>

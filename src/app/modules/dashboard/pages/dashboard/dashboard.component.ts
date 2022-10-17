@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ProductOffer } from 'src/app/shared/models';
+import { Observable } from 'rxjs';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { ProductsState } from 'src/app/+state/products.state';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,7 +10,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  @Select(ProductsState.getFavorites) favorites$: Observable<ProductOffer[]>;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.listenScrollVertical();
+  }
+
+  listenScrollVertical(): void {
+    const scrollContainer = document.getElementById('favoritesList');
+    scrollContainer.addEventListener('wheel', (evt) => {
+      evt.preventDefault();
+      scrollContainer.scrollLeft += evt.deltaY;
+    });
+  }
 }
